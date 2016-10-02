@@ -18,7 +18,6 @@ export class MainController {
     this.socket = socket;
     this.$localForage = $localForage;
     this.$q = $q;
-    this.$localForage.clear();
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('feed');
@@ -118,7 +117,7 @@ export class MainController {
   }
 
   fetchStats(){
-    var numPages = 10;
+    var numPages = 1347;
     var i;
     var calls = [];
     var prom;

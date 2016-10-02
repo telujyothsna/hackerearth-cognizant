@@ -24,7 +24,7 @@
           </div>
           <div class="meta-compiler" md-padding ng-class="item.compiler_status !== 'Accepted' ? 'success-btn' : 'failed-btn'">
             <span ng-if="item.compiler_status == 'Accepted'">Accepted</span>
-            <span ng-if="item.compiler_status != 'Accepted'">Failed</span>
+            <span ng-if="item.compiler_status != 'Accepted'">{{item.compiler_status}}</span>
           </div>
           <div class="meta-attempts">
             Attempted by
