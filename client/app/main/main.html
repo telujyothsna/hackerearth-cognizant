@@ -1,0 +1,93 @@
+<md-content class="app-feed" flex-gt-lg="60" md-padding>
+<div layout="row" flex class="fill-height">
+  <div flex="66" class="md-padding">
+    <md-virtual-repeat-container id="vertical-container" flex>
+    <div md-virtual-repeat="item in $ctrl.feedItems" md-on-demand
+      class="result" ng-class="item.showFull ? 'show-complete' : ''" flex>
+      <div class="result-header" flex="100">
+        <img src="{{$ctrl.icons[item.language].icon}}" alt="" class="language-icon">
+        <span class="result-header-title heading">{{item.title}}</span>
+      </div>
+      <div layout="row">
+        <div class="code-preview" hljs source="item.source_code" flex="65">
+        </div>
+        <div class="analysis" flex="35">
+          <div class="meta-difficulty" flex="100">
+            <md-icon ng-if="item.metadata.level == 'Easy'" md-svg-src="assets/images/easy.svg"></md-icon>
+            <md-icon ng-if="item.metadata.level == 'Medium'" md-svg-src="assets/images/medium.svg"></md-icon>
+            <md-icon ng-if="item.metadata.level == 'Hard'" md-svg-src="assets/images/hard.svg"></md-icon>
+          </div>
+          <div class="meta-rating md-padding" flex="100">
+            <span class="stars ">
+              <i class="fa" ng-class="n < item.metadata.rating ? 'fa-star filled-stars' : 'fa-star-o hollow-stars'" ng-repeat="n in [] | range:5"></i>
+            </span>
+          </div>
+          <div class="meta-compiler" md-padding ng-class="item.compiler_status !== 'Accepted' ? 'success-btn' : 'failed-btn'">
+            <span ng-if="item.compiler_status == 'Accepted'">Accepted</span>
+            <span ng-if="item.compiler_status != 'Accepted'">Failed</span>
+          </div>
+          <div class="meta-attempts">
+            Attempted by
+            <span>
+              {{ item.metadata.users_attempted | number }}
+            </span> users
+          </div>
+        </div>
+      </div>
+    </div>
+    </md-virtual-repeat-container>
+  </div>
+  <div flex="33" class="md-padding">
+    <div class="topics panel">
+      <div class="panel-head" layout="row">
+        <span>Topics</span>
+      </div>
+     <ul flex class="topics-list panel-body">
+       <li class="md-3-line" ng-repeat="topic in $ctrl.topics" ng-click="null">
+       <div class="topic">{{topic.title}}</div>
+       </li>
+     </ul>
+    </div>
+
+    <div class="languages panel">
+      <div class="panel-head" layout="row">
+        <span>Languages</span>
+      </div>
+     <ul flex class="languages-list panel-body">
+       <li class="md-3-line" ng-repeat="lang in $ctrl.languages" ng-click="null">
+       <div class="language">{{lang.lang}}</div>
+       </li>
+     </ul>
+    </div>
+
+    <div class="stats panel">
+      <div class="panel-head">
+        Statistics
+      </div>
+      <div class="stats panel-body">
+        <div class="panel-sub-head">Top 5 languages</div>
+        <ul >
+          <li ng-repeat="item in $ctrl.stats['top-5-languages'] ">
+            <strong>{{ item | key}}</strong> : {{ item | keyvalue }}
+          </li>
+        </ul>
+        <div class="panel-sub-head">Top 2 Submissions</div>
+        <ul >
+          <li ng-repeat="item in $ctrl.stats['top-2-submissions-attempted'] ">
+            <strong>{{ item | key }}</strong>: {{item | keyvalue }}
+          </li>
+        </ul>
+
+        <div class="panel-sub-head">Submissions by difficulty</div>
+        <ul >
+          <li ng-repeat="(key, value) in $ctrl.stats['submissions-per-level'] ">
+            <strong>{{ key }}</strong>: {{ value }}
+          </li>
+        </ul>
+        <div class="panel-sub-head">Total submissions</div>
+        <span>{{ $ctrl.stats['total-submissions'] | number}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</md-content>
